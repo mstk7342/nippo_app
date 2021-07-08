@@ -1,24 +1,65 @@
-# README
+# テーブル設計
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## users テーブル
 
-Things you may want to cover:
+| Column             | Type   | Options     |
+| ------------------ | ------ | ----------- |
+| nickname           | string | null: false |
+| email              | string | null: false |
+| encrypted_password | string | null: false |
 
-* Ruby version
+### Association
 
-* System dependencies
+- has_many :companies
+- has_many :staffs
 
-* Configuration
+## companies テーブル
 
-* Database creation
+| Column                       | Type    | Options                        |
+| company_name                 | string  | null: false                    |
+| company_name_kana            | string  | null: false                    |
+| phone_number                 | string  | null: false                    |
+| fax_number                   | string  | null: false                    |
+| postal_code                  | string  | null: false                    |
+| prefecture_id                | integer | null: false                    |
+| city                         | string  | null: false                    |
+| address                      | string  | null: false                    |
+| building_name                | string  | null: false                    |
+| user_id                      | integer | null: false, foreign_key: true |
+| staff_id                     | integer | null: false, foreign_key: true |
 
-* Database initialization
+### Association
 
-* How to run the test suite
+- belongs_to :user
+- has_many :staffs
 
-* Services (job queues, cache servers, search engines, etc.)
+## staffs テーブル
 
-* Deployment instructions
+| Column              | Type         | Options                        |
+| ------------------- | ------------ | ------------------------------ |
+| staff_name          | string       | null: false                    |
+| staff_name_kana     | string       | null: false                    |
+| department          | string       | null: false                    |
+| user_id             | integer      | null: false, foreign_key: true |
+| company_id          | integer      | null: false, foreign_key: true |
 
-* ...
+### Association
+
+- belongs_to :user
+- belongs_to :company
+
+## opportunities テーブル
+
+| Column              | Type         | Options                        |
+| ------------------- | ------------ | ------------------------------ |
+| department          | string       | null: false                    |
+| user_id             | integer      | null: false, foreign_key: true |
+| staff_id            | integer      | null: false, foreign_key: true |
+| company_id          | integer      | null: false, foreign_key: true |
+
+### Association
+
+- has_many :staff
+- belongs_to :user
+- belongs_to :company
+
